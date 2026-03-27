@@ -335,6 +335,36 @@ img {
   color: #6c5ce7;
 }
 
+/* Stock labels */
+.stock-label {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.stock-label.in-stock {
+  color: #00b894;
+  background: #e6faf5;
+}
+
+.stock-label.out-of-stock {
+  color: #d63031;
+  background: #ffeaea;
+}
+
+.product-card.product-out-of-stock {
+  opacity: 0.6;
+}
+
+.btn-disabled {
+  background: #b2bec3 !important;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* ===== Features Section ===== */
 .features {
   padding: 70px 0;

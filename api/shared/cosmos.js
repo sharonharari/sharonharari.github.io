@@ -1,14 +1,28 @@
 const { CosmosClient } = require('@azure/cosmos');
 
-let container;
+let client;
+let cartsContainer;
+let productsContainer;
 
-function getContainer() {
-  if (!container) {
-    var client = new CosmosClient(process.env.COSMOS_CONNECTION_STRING);
-    var database = client.database('myshop');
-    container = database.container('carts');
+function getClient() {
+  if (!client) {
+    client = new CosmosClient(process.env.COSMOS_CONNECTION_STRING);
   }
-  return container;
+  return client;
 }
 
-module.exports = { getContainer };
+function getContainer() {
+  if (!cartsContainer) {
+    cartsContainer = getClient().database('myshop').container('carts');
+  }
+  return cartsContainer;
+}
+
+function getProductsContainer() {
+  if (!productsContainer) {
+    productsContainer = getClient().database('myshop').container('products');
+  }
+  return productsContainer;
+}
+
+module.exports = { getContainer, getProductsContainer };
