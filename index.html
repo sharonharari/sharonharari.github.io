@@ -22,8 +22,31 @@
       <div class="auth-area" id="authArea">
         <span class="auth-loading">טוען...</span>
       </div>
+      <button class="cart-toggle" onclick="toggleCart()" aria-label="עגלת קניות">
+        🛒 <span class="cart-count" id="cartCount" style="display:none">0</span>
+      </button>
     </div>
   </header>
+
+  <!-- Cart Slide Panel -->
+  <aside class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <h3>🛒 הסל שלי</h3>
+      <button class="cart-close" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="cart-empty">🛒 הסל ריק</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>סה״כ:</span>
+        <span class="cart-total" id="cartTotal">₪0.00</span>
+      </div>
+      <button class="btn btn-primary cart-checkout-btn" onclick="alert('מעבר לתשלום!')">לתשלום</button>
+      <button class="btn cart-clear-btn" onclick="clearCartUI()">רוקן סל</button>
+    </div>
+  </aside>
+  <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 
   <!-- Hero Section -->
   <section id="home" class="hero">
@@ -52,7 +75,7 @@
             <p class="product-description">תיאור קצר של המוצר שמסביר למה הוא מיוחד</p>
             <div class="product-footer">
               <span class="product-price">₪99.90</span>
-              <button class="btn btn-small">הוסף לסל</button>
+              <button class="btn btn-small" onclick="addProductToCart('prod-1','שם המוצר',99.90)">הוסף לסל</button>
             </div>
           </div>
         </div>
@@ -68,7 +91,7 @@
             <p class="product-description">תיאור קצר של המוצר שמסביר למה הוא מיוחד</p>
             <div class="product-footer">
               <span class="product-price">₪79.90</span>
-              <button class="btn btn-small">הוסף לסל</button>
+              <button class="btn btn-small" onclick="addProductToCart('prod-2','שם המוצר',79.90)">הוסף לסל</button>
             </div>
           </div>
         </div>
@@ -83,7 +106,7 @@
             <p class="product-description">תיאור קצר של המוצר שמסביר למה הוא מיוחד</p>
             <div class="product-footer">
               <span class="product-price">₪149.90</span>
-              <button class="btn btn-small">הוסף לסל</button>
+              <button class="btn btn-small" onclick="addProductToCart('prod-3','שם המוצר',149.90)">הוסף לסל</button>
             </div>
           </div>
         </div>
@@ -99,7 +122,7 @@
             <p class="product-description">תיאור קצר של המוצר שמסביר למה הוא מיוחד</p>
             <div class="product-footer">
               <span class="product-price">₪59.90</span>
-              <button class="btn btn-small">הוסף לסל</button>
+              <button class="btn btn-small" onclick="addProductToCart('prod-4','שם המוצר',59.90)">הוסף לסל</button>
             </div>
           </div>
         </div>
@@ -114,7 +137,7 @@
             <p class="product-description">תיאור קצר של המוצר שמסביר למה הוא מיוחד</p>
             <div class="product-footer">
               <span class="product-price">₪129.90</span>
-              <button class="btn btn-small">הוסף לסל</button>
+              <button class="btn btn-small" onclick="addProductToCart('prod-5','שם המוצר',129.90)">הוסף לסל</button>
             </div>
           </div>
         </div>
@@ -130,7 +153,7 @@
             <p class="product-description">תיאור קצר של המוצר שמסביר למה הוא מיוחד</p>
             <div class="product-footer">
               <span class="product-price">₪89.90</span>
-              <button class="btn btn-small">הוסף לסל</button>
+              <button class="btn btn-small" onclick="addProductToCart('prod-6','שם המוצר',89.90)">הוסף לסל</button>
             </div>
           </div>
         </div>
@@ -272,6 +295,7 @@
     </div>
   </footer>
 
+  <script src="cart.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

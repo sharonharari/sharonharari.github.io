@@ -30,8 +30,11 @@ function renderAuth(user) {
 
 // Mobile menu toggle
 document.addEventListener('DOMContentLoaded', function () {
-  // Load auth state
-  getUser().then(renderAuth);
+  // Load auth state, then load cart
+  getUser().then(function (user) {
+    renderAuth(user);
+    initCart();
+  });
 
   var menuToggle = document.querySelector('.menu-toggle');
   var nav = document.querySelector('.nav');
