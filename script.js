@@ -1,3 +1,9 @@
+// Promo popup close
+function closePromo() {
+  var overlay = document.getElementById('promoOverlay');
+  if (overlay) overlay.classList.remove('show');
+}
+
 // Azure Static Web Apps Authentication
 async function getUser() {
   try {
@@ -35,6 +41,15 @@ document.addEventListener('DOMContentLoaded', function () {
     renderAuth(user);
     initCart();
   });
+
+  // Show promo popup once per session (not on reloads)
+  if (!sessionStorage.getItem('promo_shown')) {
+    var overlay = document.getElementById('promoOverlay');
+    if (overlay) {
+      setTimeout(function () { overlay.classList.add('show'); }, 500);
+      sessionStorage.setItem('promo_shown', '1');
+    }
+  }
 
   var menuToggle = document.querySelector('.menu-toggle');
   var nav = document.querySelector('.nav');

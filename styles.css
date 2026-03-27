@@ -789,6 +789,79 @@ img {
 }
 
 /* ===== Responsive ===== */
+
+/* ===== Promo Popup ===== */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 3000;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-overlay.show {
+  display: flex;
+}
+
+.popup-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px 35px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+  animation: popupIn 0.4s ease;
+}
+
+@keyframes popupIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.popup-close {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #636e72;
+  padding: 4px 8px;
+}
+
+.popup-close:hover {
+  color: #d63031;
+}
+
+.popup-image {
+  font-size: 4rem;
+  margin-bottom: 15px;
+}
+
+.popup-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #6c5ce7;
+  margin-bottom: 10px;
+}
+
+.popup-text {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+.popup-btn {
+  font-size: 1.05rem;
+  padding: 12px 30px;
+}
+
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
