@@ -1,10 +1,274 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>My Shop</title>
-  </head>
-  <body>
-    <h1>החנות שלי</h1>
-    <p>ברוכה הבאה!</p>
-  </body>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>החנות שלי</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header & Navigation -->
+  <header class="header">
+    <div class="container header-content">
+      <a href="#" class="logo">🛍️ החנות שלי</a>
+      <button class="menu-toggle" aria-label="תפריט">☰</button>
+      <nav class="nav">
+        <a href="#home">דף הבית</a>
+        <a href="#products">מוצרים</a>
+        <a href="#about">אודות</a>
+        <a href="#contact">צור קשר</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="container hero-content">
+      <h1>ברוכים הבאים לחנות שלי</h1>
+      <p>מוצרים איכותיים במחירים משתלמים – הכל במקום אחד</p>
+      <a href="#products" class="btn btn-primary">לצפייה במוצרים</a>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section id="products" class="products">
+    <div class="container">
+      <h2 class="section-title">המוצרים שלנו</h2>
+      <p class="section-subtitle">מבחר מוצרים נבחרים במיוחד בשבילכם</p>
+
+      <div class="product-grid">
+        <!-- Product 1 -->
+        <div class="product-card">
+          <div class="product-image">
+            <span class="product-badge">חדש</span>
+            <div class="product-image-placeholder">🖼️</div>
+          </div>
+          <div class="product-info">
+            <h3>שם המוצר</h3>
+            <p class="product-description">תיאור קצר של המוצר שמסביר למה הוא מיוחד</p>
+            <div class="product-footer">
+              <span class="product-price">₪99.90</span>
+              <button class="btn btn-small">הוסף לסל</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card">
+          <div class="product-image">
+            <span class="product-badge sale">מבצע</span>
+            <div class="product-image-placeholder">🖼️</div>
+          </div>
+          <div class="product-info">
+            <h3>שם המוצר</h3>
+            <p class="product-description">תיאור קצר של המוצר שמסביר למה הוא מיוחד</p>
+            <div class="product-footer">
+              <span class="product-price">₪79.90</span>
+              <button class="btn btn-small">הוסף לסל</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card">
+          <div class="product-image">
+            <div class="product-image-placeholder">🖼️</div>
+          </div>
+          <div class="product-info">
+            <h3>שם המוצר</h3>
+            <p class="product-description">תיאור קצר של המוצר שמסביר למה הוא מיוחד</p>
+            <div class="product-footer">
+              <span class="product-price">₪149.90</span>
+              <button class="btn btn-small">הוסף לסל</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card">
+          <div class="product-image">
+            <span class="product-badge">חדש</span>
+            <div class="product-image-placeholder">🖼️</div>
+          </div>
+          <div class="product-info">
+            <h3>שם המוצר</h3>
+            <p class="product-description">תיאור קצר של המוצר שמסביר למה הוא מיוחד</p>
+            <div class="product-footer">
+              <span class="product-price">₪59.90</span>
+              <button class="btn btn-small">הוסף לסל</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card">
+          <div class="product-image">
+            <div class="product-image-placeholder">🖼️</div>
+          </div>
+          <div class="product-info">
+            <h3>שם המוצר</h3>
+            <p class="product-description">תיאור קצר של המוצר שמסביר למה הוא מיוחד</p>
+            <div class="product-footer">
+              <span class="product-price">₪129.90</span>
+              <button class="btn btn-small">הוסף לסל</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card">
+          <div class="product-image">
+            <span class="product-badge sale">מבצע</span>
+            <div class="product-image-placeholder">🖼️</div>
+          </div>
+          <div class="product-info">
+            <h3>שם המוצר</h3>
+            <p class="product-description">תיאור קצר של המוצר שמסביר למה הוא מיוחד</p>
+            <div class="product-footer">
+              <span class="product-price">₪89.90</span>
+              <button class="btn btn-small">הוסף לסל</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🚚</div>
+          <h3>משלוח מהיר</h3>
+          <p>משלוח עד הבית תוך 3-5 ימי עסקים</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>תשלום מאובטח</h3>
+          <p>כל העסקאות מוצפנות ומאובטחות</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">↩️</div>
+          <h3>החזרות קלות</h3>
+          <p>מדיניות החזרה גמישה תוך 14 יום</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3>שירות לקוחות</h3>
+          <p>צוות תמיכה זמין עבורכם בכל שאלה</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="container about-content">
+      <div class="about-text">
+        <h2 class="section-title">אודות החנות</h2>
+        <p>
+          ברוכים הבאים לחנות שלי! אנחנו חנות שמתמחה במוצרים איכותיים
+          ובשירות אישי ומקצועי. המטרה שלנו היא לספק לכם את החוויה הטובה ביותר
+          עם מוצרים שנבחרו בקפידה.
+        </p>
+        <p>
+          אנחנו מאמינים באיכות, בשירות מצוין ובמחירים הוגנים. כל מוצר בחנות
+          נבחר בקפידה כדי להבטיח את שביעות רצונכם.
+        </p>
+      </div>
+      <div class="about-image">
+        <div class="about-image-placeholder">📸<br>התמונה שלך כאן</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2 class="section-title">צור קשר</h2>
+      <p class="section-subtitle">יש לכם שאלה? נשמח לעזור!</p>
+
+      <div class="contact-content">
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label for="name">שם מלא</label>
+            <input type="text" id="name" name="name" required placeholder="השם שלך">
+          </div>
+          <div class="form-group">
+            <label for="email">אימייל</label>
+            <input type="email" id="email" name="email" required placeholder="example@email.com" dir="ltr">
+          </div>
+          <div class="form-group">
+            <label for="message">הודעה</label>
+            <textarea id="message" name="message" rows="5" required placeholder="כתבו את הודעתכם כאן..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">שלח הודעה</button>
+        </form>
+
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <div>
+              <strong>כתובת</strong>
+              <p>רחוב הראשי 123, תל אביב</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <div>
+              <strong>טלפון</strong>
+              <p dir="ltr">050-1234567</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">✉️</span>
+            <div>
+              <strong>אימייל</strong>
+              <p dir="ltr">info@myshop.co.il</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">🕐</span>
+            <div>
+              <strong>שעות פעילות</strong>
+              <p>א׳–ה׳: 09:00–18:00 | ו׳: 09:00–13:00</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-section">
+        <h4>🛍️ החנות שלי</h4>
+        <p>מוצרים איכותיים במחירים משתלמים</p>
+      </div>
+      <div class="footer-section">
+        <h4>קישורים מהירים</h4>
+        <a href="#home">דף הבית</a>
+        <a href="#products">מוצרים</a>
+        <a href="#about">אודות</a>
+        <a href="#contact">צור קשר</a>
+      </div>
+      <div class="footer-section">
+        <h4>עקבו אחרינו</h4>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 החנות שלי. כל הזכויות שמורות.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
 </html>
