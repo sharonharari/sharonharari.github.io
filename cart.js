@@ -1,65 +1,84 @@
-// ===== Cart Helper Functions =====
-// Works with Azure Static Web Apps auth + /api/ Azure Functions
+// ===== Cart System (localStorage + optional API sync) =====
 
-async function getCart() {
+var CART_KEY = 'myshop_cart';
+
+// --- localStorage cart storage ---
+function getCartLocal() {
   try {
-    var res = await fetch('/api/getCart');
-    if (!res.ok) return { items: [] };
-    return await res.json();
+    var data = localStorage.getItem(CART_KEY);
+    return data ? JSON.parse(data) : { items: [] };
   } catch (e) {
     return { items: [] };
   }
 }
 
-async function addToCart(product) {
-  var res = await fetch('/api/addToCart', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ product: product })
-  });
-  if (!res.ok) throw new Error('Failed to add to cart');
-  return await res.json();
+function saveCartLocal(cart) {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
 }
 
-async function removeFromCart(productId) {
-  // Fetch current cart, filter out the product, save back
-  var cart = await getCart();
+// --- Public cart functions ---
+
+function getCart() {
+  return getCartLocal();
+}
+
+function addToCart(product) {
+  var cart = getCartLocal();
+  var existing = cart.items.find(function (item) {
+    return item.productId === product.productId;
+  });
+  if (existing) {
+    existing.quantity += (product.quantity || 1);
+  } else {
+    cart.items.push({
+      productId: product.productId,
+      name: product.name,
+      price: product.price,
+      quantity: product.quantity || 1
+    });
+  }
+  cart.updatedAt = new Date().toISOString();
+  saveCartLocal(cart);
+  syncCartToAPI(cart);
+  return cart;
+}
+
+function removeFromCart(productId) {
+  var cart = getCartLocal();
   cart.items = cart.items.filter(function (item) {
     return item.productId !== productId;
   });
-  return await saveCart(cart.items);
+  cart.updatedAt = new Date().toISOString();
+  saveCartLocal(cart);
+  syncCartToAPI(cart);
+  return cart;
 }
 
-async function updateCartQuantity(productId, quantity) {
-  var cart = await getCart();
+function updateCartQuantity(productId, quantity) {
+  if (quantity <= 0) return removeFromCart(productId);
+  var cart = getCartLocal();
   var item = cart.items.find(function (i) { return i.productId === productId; });
-  if (item) {
-    if (quantity <= 0) {
-      return await removeFromCart(productId);
-    }
-    item.quantity = quantity;
-  }
-  return await saveCart(cart.items);
+  if (item) item.quantity = quantity;
+  cart.updatedAt = new Date().toISOString();
+  saveCartLocal(cart);
+  syncCartToAPI(cart);
+  return cart;
 }
 
-async function saveCart(items) {
-  var res = await fetch('/api/saveCart', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ items: items })
-  });
-  if (!res.ok) throw new Error('Failed to save cart');
-  return await res.json();
+function clearCart() {
+  var cart = { items: [], updatedAt: new Date().toISOString() };
+  saveCartLocal(cart);
+  syncCartToAPI(cart);
+  return cart;
 }
 
-async function clearCart() {
-  var res = await fetch('/api/clearCart', {
+// Optional: sync to Azure API if available (fire-and-forget)
+function syncCartToAPI(cart) {
+  fetch('/api/saveCart', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({})
-  });
-  if (!res.ok) throw new Error('Failed to clear cart');
-  return await res.json();
+    body: JSON.stringify({ items: cart.items })
+  }).catch(function () { /* API not available, that's OK */ });
 }
 
 // ===== Cart UI Rendering =====
@@ -84,7 +103,7 @@ function renderCartPanel(cart) {
 
   // Render items
   if (items.length === 0) {
-    itemsEl.innerHTML = '<p class="cart-empty">🛒 הסל ריק</p>';
+    itemsEl.innerHTML = '<p class="cart-empty">\ud83d\uded2 \u05d4\u05e1\u05dc \u05e8\u05d9\u05e7</p>';
   } else {
     var html = '';
     items.forEach(function (item) {
@@ -92,13 +111,13 @@ function renderCartPanel(cart) {
         '<div class="cart-item" data-id="' + item.productId + '">' +
           '<div class="cart-item-info">' +
             '<span class="cart-item-name">' + item.name + '</span>' +
-            '<span class="cart-item-price">₪' + item.price.toFixed(2) + '</span>' +
+            '<span class="cart-item-price">\u20aa' + item.price.toFixed(2) + '</span>' +
           '</div>' +
           '<div class="cart-item-actions">' +
-            '<button class="cart-qty-btn" onclick="changeQty(\'' + item.productId + '\', -1)">−</button>' +
+            '<button class="cart-qty-btn" onclick="changeQty(\'' + item.productId + '\', -1)">\u2212</button>' +
             '<span class="cart-item-qty">' + item.quantity + '</span>' +
             '<button class="cart-qty-btn" onclick="changeQty(\'' + item.productId + '\', 1)">+</button>' +
-            '<button class="cart-remove-btn" onclick="removeItem(\'' + item.productId + '\')">✕</button>' +
+            '<button class="cart-remove-btn" onclick="removeItem(\'' + item.productId + '\')">\u2715</button>' +
           '</div>' +
         '</div>';
     });
@@ -107,7 +126,7 @@ function renderCartPanel(cart) {
 
   // Total
   if (totalEl) {
-    totalEl.textContent = '₪' + totalPrice.toFixed(2);
+    totalEl.textContent = '\u20aa' + totalPrice.toFixed(2);
   }
 }
 
@@ -116,43 +135,32 @@ function toggleCart() {
   if (panel) panel.classList.toggle('open');
 }
 
-async function changeQty(productId, delta) {
-  var cart = await getCart();
+function changeQty(productId, delta) {
+  var cart = getCartLocal();
   var item = cart.items.find(function (i) { return i.productId === productId; });
   if (!item) return;
-  var newQty = item.quantity + delta;
-  var updated = await updateCartQuantity(productId, newQty);
+  var updated = updateCartQuantity(productId, item.quantity + delta);
   renderCartPanel(updated);
 }
 
-async function removeItem(productId) {
-  var updated = await removeFromCart(productId);
+function removeItem(productId) {
+  var updated = removeFromCart(productId);
   renderCartPanel(updated);
 }
 
-async function clearCartUI() {
-  var updated = await clearCart();
+function clearCartUI() {
+  var updated = clearCart();
   renderCartPanel(updated);
 }
 
 // Called from product "add to cart" buttons
-async function addProductToCart(productId, name, price) {
-  var user = await getUser();
-  if (!user) {
-    window.location.href = '/.auth/login/google';
-    return;
-  }
-  var updated = await addToCart({ productId: productId, name: name, price: price, quantity: 1 });
+function addProductToCart(productId, name, price) {
+  var updated = addToCart({ productId: productId, name: name, price: price, quantity: 1 });
   renderCartPanel(updated);
 }
 
-// Load cart on page init (called from script.js after auth loads)
-async function initCart() {
-  var user = await getUser();
-  if (user) {
-    var cart = await getCart();
-    renderCartPanel(cart);
-  } else {
-    renderCartPanel({ items: [] });
-  }
+// Load cart on page init
+function initCart() {
+  var cart = getCartLocal();
+  renderCartPanel(cart);
 }
