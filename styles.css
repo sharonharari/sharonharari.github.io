@@ -135,6 +135,71 @@ img {
   color: #333;
 }
 
+/* ===== Auth Area ===== */
+.auth-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: auto;
+  margin-left: 20px;
+}
+
+.auth-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.auth-user-info .user-name {
+  font-weight: 600;
+  color: #2d3436;
+}
+
+.auth-loading {
+  font-size: 0.85rem;
+  color: #b2bec3;
+}
+
+.btn-auth {
+  padding: 7px 16px;
+  border: 2px solid #6c5ce7;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  background: transparent;
+  color: #6c5ce7;
+}
+
+.btn-auth:hover {
+  background: #6c5ce7;
+  color: #fff;
+}
+
+.btn-auth.btn-login {
+  background: #6c5ce7;
+  color: #fff;
+}
+
+.btn-auth.btn-login:hover {
+  background: #5a4bd1;
+  border-color: #5a4bd1;
+}
+
+.btn-auth.btn-logout {
+  border-color: #d63031;
+  color: #d63031;
+}
+
+.btn-auth.btn-logout:hover {
+  background: #d63031;
+  color: #fff;
+}
+
 /* ===== Hero Section ===== */
 .hero {
   padding: 160px 0 100px;
@@ -486,6 +551,16 @@ img {
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
+  }
+
+  .auth-area {
+    margin-right: 0;
+    margin-left: 10px;
+    font-size: 0.8rem;
+  }
+
+  .auth-user-info .user-name {
+    display: none;
   }
 
   .nav {

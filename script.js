@@ -1,5 +1,38 @@
+// Azure Static Web Apps Authentication
+async function getUser() {
+  try {
+    var response = await fetch('/.auth/me');
+    if (!response.ok) return null;
+    var data = await response.json();
+    return (data && data.clientPrincipal) ? data.clientPrincipal : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function renderAuth(user) {
+  var authArea = document.getElementById('authArea');
+  if (!authArea) return;
+
+  if (user) {
+    var displayName = user.userDetails || user.userId || 'משתמש';
+    authArea.innerHTML =
+      '<span class="auth-user-info">' +
+        '<span class="user-name">שלום, ' + displayName + '</span>' +
+      '</span>' +
+      '<a href="/.auth/logout" class="btn-auth btn-logout">התנתק</a>';
+  } else {
+    authArea.innerHTML =
+      '<span class="auth-user-info">לא מחובר</span>' +
+      '<a href="/.auth/login/google" class="btn-auth btn-login">התחבר עם Google</a>';
+  }
+}
+
 // Mobile menu toggle
 document.addEventListener('DOMContentLoaded', function () {
+  // Load auth state
+  getUser().then(renderAuth);
+
   var menuToggle = document.querySelector('.menu-toggle');
   var nav = document.querySelector('.nav');
 
